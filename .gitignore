@@ -1,2 +1,5 @@
 *.out
 *.o
+/mips/tmp
+/mips/disk
+/mips/vmlinux*
