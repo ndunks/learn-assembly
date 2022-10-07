@@ -19,7 +19,7 @@ mount | grep $PWD/disk || sudo mount -t tmpfs tmpfs ./disk
 mount | grep $PWD/disk/loop && sudo umount ./disk/loop
 
 mkdir -p disk/loop
-dd if=/dev/zero of=disk/disk.img bs=1024 count=5000
+dd if=/dev/zero of=disk/disk.img bs=1024 count=3200
 mkfs.ext2 -F disk/disk.img
 
 cat <<EOF | sudo bash
@@ -42,9 +42,10 @@ export PATH=/bin
 /busybox --install -s /bin
 mount -t proc none /proc
 mount -t sysfs none /sys
-mount -t tmpfs none /dev
-mdev -s
-echo "Running app"
+# /dev is automounted by kernel
+# mount -t tmpfs none /dev
+# mdev -s
+echo "Running app, pres ctrl-A then X to exit qemu"
 ./app
 exec /bin/getty -n -l /bin/sh ttyS0 115200 vt100
 END
@@ -59,4 +60,4 @@ qemu-system-mips -M malta \
     -nographic -serial mon:stdio \
     -kernel tmp/linux-5.19.14/vmlinux \
     -drive file=disk/disk.img,format=raw \
-    -append "root=/dev/sda rw init=/init console=ttyS0" \
+    -append "root=/dev/sda rw rootfstype=ext2 init=/init console=ttyS0" \
