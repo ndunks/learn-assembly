@@ -57,6 +57,6 @@ echo "Starting qemu.."
 qemu-system-mips -M malta \
     -nodefaults \
     -nographic -serial mon:stdio \
-    -kernel vmlinux-2.6.32-5-4kc-malta \
+    -kernel tmp/linux-5.19.14/vmlinux \
     -drive file=disk/disk.img,format=raw \
     -append "root=/dev/sda rw init=/init console=ttyS0" \
