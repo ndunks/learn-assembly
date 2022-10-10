@@ -1,42 +1,32 @@
+# Example helloworld Using Syscall from Linux Kernel
 
-##define v0      $2      /* return value */
-##define v1      $3
-##define a0      $4      /* argument registers */
-##define a1      $5
-##define a2      $6
-##define a3      $7
-
-# Using Linux Kernel
 # printf SYS_write | mips-linux-gnu-gcc -include sys/syscall.h -E -
+# (4000 + 4)
 # printf SYS_exit | mips-linux-gnu-gcc -include sys/syscall.h -E -
+# (4000 + 29)
+# file:///usr/mips-linux-gnu/include/asm/unistd_o32.h
 
-#include <sys/regdef.h>
+# Compiling:
+# mips-linux-gnu-as -EB -non_shared -march=4kc -o hello-world-linux-32.o hello-world-linux-32.S
+# mips-linux-gnu-ld -o hello-world-linux-32.elf hello-world-linux-32.o
+# mips-linux-gnu-objdump -d hello-world-linux-32.elf
 
-.global _start
-#.set noat
+# Emulating:
+# qemu-mips -cpu 4Kc hello-world-linux-32.elf
+
 .data
-msg:
-    .ascii "Hello world\n\x0"
-    msglen: $ - msg
+msg: .asciiz "Hello World\n"
+.align 4
+
 .text
-_start:
-    # li $4, v0       # write (
-    # li $1, a0       #   stdout,
-    # la a1, $msg     #   &msg,
-    # lw a2, msglen  #   length,
-    # syscall        # )
-    li $2,     $2    # write (
-    li $4,     $4   #   stdout,
-    la msg,   $5   #   &msg,
-    lw msglen,$6   #   length,
-    syscall        # )
+.globl __start
+__start:
 
-    # li 29, v0 # pause
-    # syscall
-    # # syscall for exit
-    # li zero, v0
-    # syscall
+    li      $v0,    4000+4      # write (
+    li      $a0,    1           # stdout,
+    la      $a1,    msg         # &msg,
+    li      $a2,    12          # length,
+    syscall                     # )
 
-# Compiling
-# mips-linux-gnu-as -march=4kc -mtun=4kc -mno-shared hello-world-linux-32.S
-# Emulating
+    li      $v0,    4000+29     # pause (
+    syscall                     # );

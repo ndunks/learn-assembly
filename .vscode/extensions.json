@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "rights.nas-vscode"
+        "rights.nas-vscode",
+        "roperzh.make-auto-vars"
     ]
 }
