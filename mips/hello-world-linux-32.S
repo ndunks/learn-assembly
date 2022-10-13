@@ -1,4 +1,4 @@
-# Example helloworld Using Syscall from Linux Kernel
+# Example hello world MIPS 32bit BigEndian Using Syscall from Linux Kernel
 
 # printf SYS_write | mips-linux-gnu-gcc -include sys/syscall.h -E -
 # (4000 + 4)
@@ -11,8 +11,11 @@
 # mips-linux-gnu-ld -o hello-world-linux-32.elf hello-world-linux-32.o
 # mips-linux-gnu-objdump -d hello-world-linux-32.elf
 
-# Emulating:
+# Emulating Qemu Static:
 # qemu-mips -cpu 4Kc hello-world-linux-32.elf
+
+# Emulating Qemu System:
+# ./qemulate-minimum.sh
 
 .data
 msg: .asciiz "Hello World\n"
@@ -21,12 +24,12 @@ msg: .asciiz "Hello World\n"
 .text
 .globl __start
 __start:
+print:
+    li      $v0,    4000+4              # write (
+    li      $a0,    1                   # stdout,
+    la      $a1,    msg                 # &msg,
+    li      $a2,    12                  # length,
+    syscall                             # )
 
-    li      $v0,    4000+4      # write (
-    li      $a0,    1           # stdout,
-    la      $a1,    msg         # &msg,
-    li      $a2,    12          # length,
-    syscall                     # )
-
-    li      $v0,    4000+29     # pause (
-    syscall                     # );
+    li      $v0,    4000+29             # pause (
+    syscall                             # );

@@ -1,6 +1,5 @@
 # MIPS Linux using Assembly
 
-
 - Kernel 2.6.x
 - ucLibc https://uclibc.org/downloads/uClibc-0.9.33.tar.xz
 
@@ -45,3 +44,7 @@ mips-linux-gnu-gcc -static  hello.c
 ./qemulate
 
 ```
+
+## Referrences
+- https://www.dsi.unive.it/~gasparetto/materials/MIPS_Instruction_Set.pdf
+- http://winfred-lu.blogspot.com/2010/06/step-by-step-to-mips-assembly.html

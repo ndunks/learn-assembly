@@ -13,7 +13,8 @@ mkdir -p tmp
 [ -f tmp/busybox ] \
     || wget -O tmp/busybox https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-mips \
     && chmod +x tmp/busybox
-
+    
+# Use ram instead disk while building fs image
 mkdir -p disk
 mount | grep $PWD/disk || sudo mount -t tmpfs tmpfs ./disk
 mount | grep $PWD/disk/loop && sudo umount ./disk/loop
