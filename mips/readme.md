@@ -49,3 +49,39 @@ mips-linux-gnu-gcc -static  hello.c
 - https://irix7.com/techpubs.html
 - https://www.dsi.unive.it/~gasparetto/materials/MIPS_Instruction_Set.pdf
 - http://winfred-lu.blogspot.com/2010/06/step-by-step-to-mips-assembly.html
+
+### Err Qemu
+
+- https://lists.nongnu.org/archive/html/qemu-devel/2011-07/msg00133.html
+- https://github.com/nfd/ci20-hello-world
+- https://github.com/zephyrproject-rtos/zephyr/tree/v3.0.0/soc/mips/qemu_malta
+
+```
+IN: 
+0xbfc00000:  li v0,11
+0xbfc00004:  li a0,65
+0xbfc00008:  syscall
+
+OP:
+ ld_i32 tmp0,env,$0xfffffffffffffff0
+ brcond_i32 tmp0,$0x0,lt,$L0
+
+ ---- bfc00000 00000000 00000000
+ mov_i32 v0,$0xb
+
+ ---- bfc00004 00000000 00000000
+ mov_i32 a0,$0x41
+
+ ---- bfc00008 00000000 00000000
+ mov_i32 PC,$0xbfc00008
+ call raise_exception_err,$0x8,$0,env,$0x11,$0x0
+ set_label $L0
+ exit_tb $0x7f1ec0000043
+
+do_raise_exception_err: 17 (syscall) 0
+mips_cpu_do_interrupt enter: PC bfc00008 EPC 00000000 syscall exception
+mips_cpu_do_interrupt: PC bfc00380 EPC bfc00008 cause 8
+    S 00400006 C 00000420 A 00000000 D 00000000
+----------------
+
+```

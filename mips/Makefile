@@ -1,5 +1,5 @@
 all: linux32
-# nodemon --delay 100ms --signal SIGKILL -w Makefile -w *.asm -x 'make mips32'
+# nodemon --delay 100ms --signal SIGKILL -w Makefile -w *.ld -w *.asm -x 'make mips32 || false'
 mips32Linux:
 	mips-linux-gnu-as -EB -O0 -non_shared -march=4kc -o hello-world-32.o hello-world-32.asm
 	mips-linux-gnu-ld -e 0 -O0  --oformat elf32-tradbigmips \
@@ -33,7 +33,7 @@ mips32:
     -nodefaults \
 	-no-reboot -no-shutdown \
 	-bios hello-world-32.bin \
-	-d in_asm 2>&1 | head -n 50
+	-d unimp,in_asm,int,op 2>&1 | head -n 40
 #	-drive if=pflash,file=hello-world-32.bin,format=raw \
 #	-kernel hello-world-32.bin \
 
