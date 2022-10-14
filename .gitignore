@@ -1,5 +1,6 @@
 *.out
 *.o
 *.elf
+*.bin
 /mips/tmp
 /mips/disk

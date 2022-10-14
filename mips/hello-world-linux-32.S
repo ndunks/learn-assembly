@@ -24,12 +24,11 @@ msg: .asciiz "Hello World\n"
 .text
 .globl __start
 __start:
-print:
-    li      $v0,    4000+4              # write (
-    li      $a0,    1                   # stdout,
-    la      $a1,    msg                 # &msg,
-    li      $a2,    12                  # length,
-    syscall                             # )
+    li      $v0,    4000+4      # write (
+    li      $a0,    1           # stdout,
+    la      $a1,    msg         # &msg,
+    li      $a2,    12          # length,
+    syscall                     # )
 
-    li      $v0,    4000+29             # pause (
-    syscall                             # );
+    li      $v0,    4000+29     # pause (
+    syscall                     # );

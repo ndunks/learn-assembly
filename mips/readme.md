@@ -46,5 +46,6 @@ mips-linux-gnu-gcc -static  hello.c
 ```
 
 ## Referrences
+- https://irix7.com/techpubs.html
 - https://www.dsi.unive.it/~gasparetto/materials/MIPS_Instruction_Set.pdf
 - http://winfred-lu.blogspot.com/2010/06/step-by-step-to-mips-assembly.html
