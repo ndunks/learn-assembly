@@ -17,8 +17,8 @@ set -e
 echo "Creating rootfs.."
 mount -t ext2 -o loop disk/disk.img ./disk/loop
 
-cp hello-world-linux-32.elf disk/loop/
-chmod +x disk/loop/hello-world-linux-32.elf
+cp linux32 disk/loop/
+chmod +x disk/loop/linux32
 sync
 sudo umount ./disk/loop
 EOF
@@ -29,4 +29,4 @@ qemu-system-mips -M malta \
     -nographic -serial mon:stdio \
     -kernel vmlinux \
     -drive file=disk/disk.img,format=raw \
-    -append "root=/dev/sda rw rootfstype=ext2 init=/hello-world-linux-32.elf console=ttyS0" \
+    -append "root=/dev/sda rw rootfstype=ext2 init=/linux32 console=ttyS0" \
