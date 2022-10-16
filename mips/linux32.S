@@ -23,20 +23,6 @@
 # include <asm/unistd.h>
 # include <sys/asm.h>
 
-# Refference on docs or here https://refspecs.linuxfoundation.org/elf/mipsabi.pdf
-# Symbols
-# _end:
-# correspond to the beginning of the dynamic allocation area of a program,
-# called the heap. Typically, the heap begins immediately after the data
-# segment of the program executable file.
-
-# _gp:
-# This symbol is defined by the link editor and provides the value used for
-# the gp register for this executable or shared object file
-
-# _gp_disp:
-# represents the offset between the beginning of the function and
-# the global offset table
 
 # use LDFLAGS:  -mno-abicalls -fno-pic
 # to make variable address not depend on gp (got)
